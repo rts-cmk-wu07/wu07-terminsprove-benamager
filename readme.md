@@ -1,0 +1,2 @@
+I have used tailwind because it is fast, easier for other developers and that shit.
+I have used Vite react because vite is fast and react is the best. cause of their community and the fact that it is the best.
