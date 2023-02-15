@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getCookie, setCookie } from "react-use-cookie"
+import { getCookie } from "react-use-cookie"
 
 export default function useAuthState() {
   // default auth state
