@@ -26,7 +26,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className={`bg-white ${showMenu ? "absolute inset-0 z-30" : null}`}>
+    <nav className={`bg-white z-10 ${showMenu ? "absolute inset-0 z-100" : null}`}>
       <ul className="flex justify-between pt-7" aria-label="Navigation bar" role="menubar">
         <li className={showMenu ? "opacity-0 pointer-events-none" : null}>
           <BiCaretUp size="30px" className="px-4 py-4 mx-1 box-content text-grey hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer" />

@@ -11,7 +11,7 @@ export default function Router() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/schedule" element={<SchedulePage />} />
-          <Route path="/class/:id" element={<ClassPage />} />
+          <Route path="/class/:classId" element={<ClassPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
