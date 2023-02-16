@@ -10,6 +10,7 @@ export default function HomePage() {
       <h1 className="text-2xl self-center z-10 -mt-[60px]">Popular Classes</h1>
       <div className="mt-[40px]">
         <RandomClass classes={classes} loading={loading} error={error} />
+        <h3 className="text-2xl mb-6 mt-1">Classes for you</h3>
         <ClassesForYou classes={classes} loading={loading} error={error} />
       </div>
     </main>

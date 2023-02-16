@@ -6,8 +6,7 @@ export default function ClassesForYou({ classes, loading, error }) {
   const navigate = useNavigate()
 
   return (
-    <section className="h-[150px] w-[105%]">
-      <h3 className="text-2xl mb-6">Classes for you</h3>
+    <section className="w-[105%]">
       <ul className="flex gap-3 overflow-y-auto pb-3 pr-3">
         {classes && classes.map((classItem) => {
           return (
