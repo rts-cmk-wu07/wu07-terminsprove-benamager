@@ -2,7 +2,7 @@ import { useAxios } from "../hooks";
 import { useParams } from "react-router-dom";
 import { ShimmerLoading, Trainer } from "../components";
 import AuthContext from "../contexts/AuthContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios"
 
 const ratingArray = [true, true, true, true, false]
@@ -16,10 +16,21 @@ export default function ClassPage() {
   const { response: classData, loading, error } = useAxios({ method: "get", url });
   const classUsers = classData?.users
 
-  console.log(classUsers)
-
   // can user join this class
-  const [canJoin, setCanJoin] = useState(classUsers?.find(classData => classData.Roster.userId === 1) ? false : true);
+  const [canJoin, setCanJoin] = useState(false);
+
+  useEffect(() => {
+    if (classUsers?.length > 0) {
+      const foundUser = classUsers.find(classData => classData.Roster.userId == authState.userId)
+      if (foundUser) {
+        setCanJoin(false)
+      } else {
+        setCanJoin(true)
+      }
+    } else {
+      setCanJoin(true)
+    }
+  }, [classData])
 
 
   function handleJoinLeave() {
