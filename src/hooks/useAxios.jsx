@@ -3,10 +3,12 @@ import axios from "axios";
 
 export default function useAxios({ url, method, body = null, headers = null }) {
   const [response, setResponse] = useState(null);
-  const [error, setError] = useState("");
-  const [loading, setloading] = useState(true);
+  const [error, setError] = useState(null);
+  const [loading, setloading] = useState(false);
 
   function fetchData() {
+    if (!url) return
+    setloading(true)
     axios[method](url, JSON.parse(headers), JSON.parse(body))
       .then((res) => {
         setResponse(res.data);

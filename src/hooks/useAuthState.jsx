@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getCookie } from "react-use-cookie"
+import { getCookie, setCookie } from "react-use-cookie"
 
 export default function useAuthState() {
   // default auth state
@@ -7,28 +7,20 @@ export default function useAuthState() {
     isAuthenticated: false,
     userId: null,
     token: "",
-    validUntil: null
+    validUntil: null,
   });
 
   useEffect(() => {
-    const authCookie = getCookie("authCookie");
+    const authCookie = JSON.parse(getCookie("authCookie") || "null");
 
     // no cookie => keep default auth state
     if (!authCookie) {
-      return
+      return;
     }
 
-    // if cookie exist and it is expired
-    const dateNow = new Date().getTime();
-    if (dateNow > authCookie.validUntil) {
-      // token has expired => keep default auth state
-      return
-    }
-
-    // token all good, push cookie data to auth state
-    setAuthState({ ...authCookie, isAuthenticated: true })
+    setAuthState(authCookie)
 
   }, []);
 
-  return { authState };
+  return { authState, setAuthState };
 }

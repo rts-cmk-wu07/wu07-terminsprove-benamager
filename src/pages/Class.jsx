@@ -10,7 +10,7 @@ export default function ClassPage() {
   const url = `${import.meta.env.VITE_API_URL}/api/v1/classes/${classId}`;
   const { response: classData, loading, error } = useAxios({ method: "get", url });
 
-  return (
+  return classData && (
     <article className="">
       {loading && !error ?
         <ShimmerLoading containerClass="h-[450px]" /> :
