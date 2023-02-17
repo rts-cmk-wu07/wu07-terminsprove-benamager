@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function useAxios({ url, method, body = null, headers = null }) {
+export default function useAxios({ url, method, body = null, headers }) {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function fetchData() {
-    if (!url) return
-    setloading(true)
-    axios[method](url, JSON.parse(headers), JSON.parse(body))
+    if (!url) return;
+    setLoading(true);
+    axios({
+      method,
+      url,
+      data: body,
+      headers: headers ? { ...headers } : {},
+    })
       .then((res) => {
         setResponse(res.data);
       })
@@ -17,13 +22,13 @@ export default function useAxios({ url, method, body = null, headers = null }) {
         setError(err);
       })
       .finally(() => {
-        setloading(false);
+        setLoading(false);
       });
-  };
+  }
 
   useEffect(() => {
     fetchData();
-  }, [method, url, body, headers]);
+  }, [method, url, body]);
 
   return { response, error, loading };
-};
+}
