@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
+import { setCookie } from "react-use-cookie";
 
 export default function Navbar() {
   const location = useLocation() // for getting pathname
@@ -33,6 +34,15 @@ export default function Navbar() {
     return false
   }
 
+  function handleLogout() {
+    setAuthState(prevState => ({ ...prevState, isAuthenticated: false }))
+    setCookie("authCookie", JSON.stringify({ ...authState, isAuthenticated: false }), {
+      days: 365,
+      sameSite: "lax",
+      secure: true,
+    });
+  }
+
   return (
     <nav className={`bg-white z-10 ${showMenu ? "absolute inset-0 z-100" : null}`}>
       <ul className="flex justify-between pt-7" aria-label="Navigation bar" role="menubar">
@@ -51,7 +61,7 @@ export default function Navbar() {
                 {!authState.isAuthenticated && <li onClick={toggleLogin} className="w-[90%] block text-center py-4 hover:bg-grey active:bg-grey rounded-xl cursor-pointer">Log in</li>}
               </>
               }
-              {authState.isAuthenticated && <li onClick={() => setAuthState((prevState) => ({ ...prevState, isAuthenticated: false }))} className="w-[90%] block text-center py-4 hover:bg-grey active:bg-grey rounded-xl cursor-pointer">Log out</li>}
+              {authState.isAuthenticated && <li onClick={() => handleLogout()} className="w-[90%] block text-center py-4 hover:bg-grey active:bg-grey rounded-xl cursor-pointer">Log out</li>}
               {showLogin && !authState.isAuthenticated && <li className="w-[90%]" id="loginForm">
                 <LoginForm toggleLogin={toggleLogin} toggleMnu={toggleMenu} />
               </li>}
