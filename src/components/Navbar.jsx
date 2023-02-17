@@ -36,10 +36,10 @@ export default function Navbar() {
   return (
     <nav className={`bg-white z-10 ${showMenu ? "absolute inset-0 z-100" : null}`}>
       <ul className="flex justify-between pt-7" aria-label="Navigation bar" role="menubar">
-        <li className={showMenu ? "opacity-0 pointer-events-none" : null}>
+        <li className={showMenu ? "opacity-0 pointer-events-none" : "z-50"}>
           {location.pathname.includes("/class") || location.pathname == "/search" || location.pathname == "/schedule" ? <span onClick={() => navigate("/home")} className="flex items-center text-primary px-4 py-4 mx-1 box-content hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer"><BsCaretLeftFill /><span className="ml-1 -translate-y-1 text-sm">Back</span></span> : <BiCaretUp onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })} size="30px" className="px-4 py-4 mx-1 box-content text-grey hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer" />}
         </li>
-        <li>{showMenu === false ?
+        <li className="">{showMenu === false ?
           <HiMenuAlt3 onClick={toggleMenu} size="30px" className="px-4 py-4 mx-1 box-content text-grey hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer" aria-label="Toggle menu" />
           : <RiCloseFill onClick={toggleMenu} size="30px" className="px-4 py-4 mx-1 box-content text-grey hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer" aria-label="Toggle menu" />}
           {showMenu &&

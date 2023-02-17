@@ -75,7 +75,7 @@ export default function ClassPage() {
   }
 
   return classData && (
-    <article className="">
+    <article className="-mt-[90px]">
       {loading && !error ?
         <ShimmerLoading containerClass="h-[450px]" /> :
         <div className="h-[450px] grid">
