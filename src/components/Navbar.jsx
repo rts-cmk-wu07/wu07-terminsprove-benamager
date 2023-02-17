@@ -2,14 +2,16 @@ import { useState } from "react";
 import { BiCaretUp } from "react-icons/bi"
 import { HiMenuAlt3 } from "react-icons/hi"
 import { RiCloseFill } from "react-icons/ri"
+import { BsCaretLeftFill } from "react-icons/bs"
 import { LoginForm } from "./index"
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 
 export default function Navbar() {
   const location = useLocation() // for getting pathname
+  const navigate = useNavigate()
   const { authState, setAuthState } = useContext(AuthContext)
 
   const [showMenu, setShowMenu] = useState(false); // menu on/off state
@@ -35,7 +37,7 @@ export default function Navbar() {
     <nav className={`bg-white z-10 ${showMenu ? "absolute inset-0 z-100" : null}`}>
       <ul className="flex justify-between pt-7" aria-label="Navigation bar" role="menubar">
         <li className={showMenu ? "opacity-0 pointer-events-none" : null}>
-          <BiCaretUp size="30px" className="px-4 py-4 mx-1 box-content text-grey hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer" />
+          {location.pathname.includes("/class") || location.pathname == "/search" || location.pathname == "/schedule" ? <span onClick={() => navigate("/home")} className="flex items-center text-primary px-4 py-4 mx-1 box-content hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer"><BsCaretLeftFill /><span className="ml-1 -translate-y-1 text-sm">Back</span></span> : <BiCaretUp onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })} size="30px" className="px-4 py-4 mx-1 box-content text-grey hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer" />}
         </li>
         <li>{showMenu === false ?
           <HiMenuAlt3 onClick={toggleMenu} size="30px" className="px-4 py-4 mx-1 box-content text-grey hover:bg-grey hover:text-black active:bg-grey active:text-black rounded-xl cursor-pointer" aria-label="Toggle menu" />

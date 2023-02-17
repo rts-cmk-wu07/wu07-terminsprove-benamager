@@ -24,7 +24,6 @@ export default function SchedulePage() {
         <p className="self-end text-red-600 text-base py-1 mt-2 cursor-pointer">This page is only for logged in users.</p> :
         <article className="flex flex-col gap-4">
           {userClasses && userClasses.map((classData) => {
-            console.log(classData)
             return (
               <section key={classData.id} onClick={() => navigate(`/class/${classData.id}`)} className="flex flex-row items-start border-b-2 border-dotted pb-3 cursor-pointer hover:opacity-50 active:hover-50">
                 <div className="leading-none">
