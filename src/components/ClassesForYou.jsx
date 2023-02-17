@@ -10,7 +10,7 @@ export default function ClassesForYou({ classes, loading, error }) {
       <ul className="flex gap-3 overflow-y-auto pb-3 pr-3">
         {classes && classes.map((classItem) => {
           return (
-            <li onClick={() => navigate(`/class/${classItem.id}`)} className="min-w-[125px] overflow-hidden cursor-pointer" key={classItem.id}>
+            <li onClick={() => navigate(`/class/${classItem.id}`)} className="min-w-[125px] max-w-[125px] overflow-hidden cursor-pointer" key={classItem.id}>
               <article className="h-full">
                 <img className="h-[150px] w-full object-cover rounded-xl shadow-sm transition-transform hover:scale-95 active:scale-95" src={classItem.asset.url} alt="" />
                 <h4 className="mt-2 truncate">{classItem.className}</h4>
