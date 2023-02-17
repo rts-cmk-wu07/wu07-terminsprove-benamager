@@ -1,14 +1,67 @@
 import { useAxios } from "../hooks";
 import { useParams } from "react-router-dom";
 import { ShimmerLoading, Trainer } from "../components";
+import AuthContext from "../contexts/AuthContext";
+import { useContext, useState } from "react";
+import axios from "axios"
 
 const ratingArray = [true, true, true, true, false]
 
 export default function ClassPage() {
+  const { authState } = useContext(AuthContext)
   const { classId } = useParams()
 
+  // get classdata
   const url = `${import.meta.env.VITE_API_URL}/api/v1/classes/${classId}`;
   const { response: classData, loading, error } = useAxios({ method: "get", url });
+  const classUsers = classData?.users
+
+  console.log(classUsers)
+
+  // can user join this class
+  const [canJoin, setCanJoin] = useState(classUsers?.find(classData => classData.Roster.userId === 1) ? false : true);
+
+
+  function handleJoinLeave() {
+    if (canJoin) {
+      // user joining class
+      console.log("now leaving")
+      const options = {
+        method: "POST",
+        url: `${import.meta.env.VITE_API_URL}/api/v1/users/${authState.userId}/classes/${classData.id}`,
+        headers: {
+          Authorization: `Bearer ${authState.token}`,
+        },
+      };
+      axios(options)
+        .then((res) => {
+          console.log("Class joined successfully");
+          // Update state or trigger a refresh
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      setCanJoin(false)
+    } else {
+      console.log("now leaving")
+      const options = {
+        method: "DELETE",
+        url: `${import.meta.env.VITE_API_URL}/api/v1/users/${authState.userId}/classes/${classData.id}`,
+        headers: {
+          Authorization: `Bearer ${authState.token}`,
+        },
+      };
+      axios(options)
+        .then((res) => {
+          console.log("Class left successfully");
+          // Update state or trigger a refresh
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      setCanJoin(true)
+    }
+  }
 
   return classData && (
     <article className="">
@@ -29,7 +82,7 @@ export default function ClassPage() {
                 })}
               </ul>
             </div>
-            <button className="bg-white h-[68px] rounded-tl-xl rounded-bl-xl text-2xl pt-1 hover:translate-x-4 active:translate-x-4 transition-transform">Sign up</button>
+            {authState.isAuthenticated && <button onClick={handleJoinLeave} className="bg-white h-[68px] rounded-tl-xl rounded-bl-xl text-2xl pt-1 hover:translate-x-4 active:translate-x-4 transition-transform">{canJoin ? "Sign up" : "Leave"}</button>}
           </div>
         </div>}
       {classData &&
